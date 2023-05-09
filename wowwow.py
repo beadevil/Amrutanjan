@@ -169,6 +169,10 @@ if selected == "Home" or selected == "Super Stockist" or selected == "Stockist" 
     st.sidebar.write("")
 
     st.sidebar.write("## Ploted Town No. :",len(dff))
+        
+    if sb_state!="SELECT":
+        df_miss=df_miss[df_miss["State"].isin([sb_state])]
+        
     st.sidebar.write("## Missing Town No. :",len(df_miss))
 
     if selected == "Home" :
