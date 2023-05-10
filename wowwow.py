@@ -6,7 +6,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from io import BytesIO
 import requests
-import os
+#import os
 from PIL import Image
 import matplotlib.pyplot as plt
 
@@ -169,10 +169,8 @@ if selected == "Home" or selected == "Super Stockist" or selected == "Stockist" 
     st.sidebar.write("")
 
     st.sidebar.write("## Ploted Town No. :",len(dff))
-        
     if sb_state!="SELECT":
         df_miss=df_miss[df_miss["State"].isin([sb_state])]
-        
     st.sidebar.write("## Missing Town No. :",len(df_miss))
 
     if selected == "Home" :
@@ -216,8 +214,8 @@ if selected == "Home" or selected == "Super Stockist" or selected == "Stockist" 
         fig.update_layout(mapbox_style="open-street-map")
         fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 #       fig.show()
-        fig.update_layout(width=800, height=700,)
-        st.plotly_chart(fig,width=800, height=700,)
+        fig.update_layout(width=900, height=700,)
+        st.plotly_chart(fig,width=900, height=700,)
 
     
 
@@ -274,8 +272,8 @@ if selected == "Home" or selected == "Super Stockist" or selected == "Stockist" 
         fig.update_layout(mapbox_style="open-street-map")
         fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 #       fig.show()
-        fig.update_layout(width=900, height=900,)
-        st.plotly_chart(fig,width=900, height=900,)
+        fig.update_layout(width=1000, height=900,)
+        st.plotly_chart(fig,width=1000, height=900,)
 
 
     if sb_adrs!="SELECT":
@@ -298,81 +296,83 @@ if selected == "Home" or selected == "Super Stockist" or selected == "Stockist" 
     st.sidebar.write("")
     st.sidebar.write("")
     
-    if sb_state!="SELECT" :
 
-        if selected == "Home" or selected == "Super Stockist" or selected == "Stockist" or selected == "SUB Stockist" :
-            dff_miss=df_miss[df_miss["State"].isin([sb_state])]
-            st.sidebar.markdown("# Missing Town Names :")
-            c=1
-            for i in dff_miss["Town"] :
-                st.sidebar.write(c,". ",i.split(",")[0])
-                c=c+1
+    if len(df_miss) != 0:
+        if sb_state!="SELECT" :
 
-        elif selected == "Stockist & SUB Stockist" :
-            dff_miss_p=df_miss[df_miss["State"].isin([sb_state])]
+            if selected == "Home" or selected == "Super Stockist" or selected == "Stockist" or selected == "SUB Stockist" :
+                dff_miss=df_miss[df_miss["State"].isin([sb_state])]
+                st.sidebar.markdown("# Missing Town Names :")
+                c=1
+                for i in dff_miss["Town"] :
+                    st.sidebar.write(c,". ",i.split(",")[0])
+                    c=c+1
 
-            dff_miss_s=dff_miss_p[dff_miss_p["Type"].isin(["Stockist"])]
-            st.sidebar.markdown("# Missing Stockist's Town Names :")
-            c=1
-            for i in dff_miss_s["Town"] :
-                st.sidebar.write(c,". ",i.split(",")[0])
-                c=c+1
+            elif selected == "Stockist & SUB Stockist" :
+                dff_miss_p=df_miss[df_miss["State"].isin([sb_state])]
 
-            dff_miss_ss=dff_miss_p[dff_miss_p["Type"].isin(["SUB Stockist"])]
-            st.sidebar.markdown("# Missing SUB Stockist's Town Names :")
-            c=1
-            for i in dff_miss_ss["Town"] :
-                st.sidebar.write(c,". ",i.split(",")[0])
-                c=c+1
+                dff_miss_s=dff_miss_p[dff_miss_p["Type"].isin(["Stockist"])]
+                st.sidebar.markdown("# Missing Stockist's Town Names :")
+                c=1
+                for i in dff_miss_s["Town"] :
+                    st.sidebar.write(c,". ",i.split(",")[0])
+                    c=c+1
 
-    else:
-        if selected == "Home" :
+                dff_miss_ss=dff_miss_p[dff_miss_p["Type"].isin(["SUB Stockist"])]
+                st.sidebar.markdown("# Missing SUB Stockist's Town Names :")
+                c=1
+                for i in dff_miss_ss["Town"] :
+                    st.sidebar.write(c,". ",i.split(",")[0])
+                    c=c+1
 
-            dff_miss_s=df_miss[df_miss["Type"].isin(["Super Stockist"])]
-            st.sidebar.markdown("# Missing Super Stockist's Town Names :")
-            c=1
-            for i in dff_miss_s["Town"] :
-                st.sidebar.write(c,". ",i.split(",")[0])
-                c=c+1
+        else:
+            if selected == "Home" :
 
-            dff_miss_ss=df_miss[df_miss["Type"].isin(["Stockist"])]
-            st.sidebar.markdown("# Missing Stockist's Town Names :")
-            c=1
-            for i in dff_miss_ss["Town"] :
-                st.sidebar.write(c,". ",i.split(",")[0])
-                c=c+1
+                dff_miss_s=df_miss[df_miss["Type"].isin(["Super Stockist"])]
+                st.sidebar.markdown("# Missing Super Stockist's Town Names :")
+                c=1
+                for i in dff_miss_s["Town"] :
+                    st.sidebar.write(c,". ",i.split(",")[0])
+                    c=c+1
 
-            dff_miss_s=df_miss[df_miss["Type"].isin(["SUB Stockist"])]
-            st.sidebar.markdown("# Missing SUB Stockist's Town Names :")
-            c=1
-            for i in dff_miss_s["Town"] :
-                st.sidebar.write(c,". ",i.split(",")[0])
-                c=c+1
+                dff_miss_ss=df_miss[df_miss["Type"].isin(["Stockist"])]
+                st.sidebar.markdown("# Missing Stockist's Town Names :")
+                c=1
+                for i in dff_miss_ss["Town"] :
+                    st.sidebar.write(c,". ",i.split(",")[0])
+                    c=c+1
+
+                dff_miss_s=df_miss[df_miss["Type"].isin(["SUB Stockist"])]
+                st.sidebar.markdown("# Missing SUB Stockist's Town Names :")
+                c=1
+                for i in dff_miss_s["Town"] :
+                    st.sidebar.write(c,". ",i.split(",")[0])
+                    c=c+1
 
 
-        elif selected == "Super Stockist" or selected == "Stockist" or selected == "SUB Stockist" :
-            df_miss_state=df_miss[df_miss["State"].isin([sb_state])]
-            st.sidebar.markdown("# Missing "+selected+"'s Town Names :")
-            c=1
-            for i in df_miss["Town"] :
-                st.sidebar.write(c,". ",i.split(",")[0])
-                c=c+1
+            elif selected == "Super Stockist" or selected == "Stockist" or selected == "SUB Stockist" :
+                df_miss_state=df_miss[df_miss["State"].isin([sb_state])]
+                st.sidebar.markdown("# Missing "+selected+"'s Town Names :")
+                c=1
+                for i in df_miss["Town"] :
+                    st.sidebar.write(c,". ",i.split(",")[0])
+                    c=c+1
 
-        elif selected == "Stockist & SUB Stockist" :
+            elif selected == "Stockist & SUB Stockist" :
 
-            dff_miss_s=df_miss[df_miss["Type"].isin(["Stockist"])]
-            st.sidebar.markdown("# Missing Stockist's Town Names :")
-            c=1
-            for i in dff_miss_s["Town"] :
-                st.sidebar.write(c,". ",i.split(",")[0])
-                c=c+1
+                dff_miss_s=df_miss[df_miss["Type"].isin(["Stockist"])]
+                st.sidebar.markdown("# Missing Stockist's Town Names :")
+                c=1
+                for i in dff_miss_s["Town"] :
+                    st.sidebar.write(c,". ",i.split(",")[0])
+                    c=c+1
 
-            dff_miss_ss=df_miss[df_miss["Type"].isin(["SUB Stockist"])]
-            st.sidebar.markdown("# Missing SUB Stockist's Town Names :")
-            c=1
-            for i in dff_miss_ss["Town"] :
-                st.sidebar.write(c,". ",i.split(",")[0])
-                c=c+1
+                dff_miss_ss=df_miss[df_miss["Type"].isin(["SUB Stockist"])]
+                st.sidebar.markdown("# Missing SUB Stockist's Town Names :")
+                c=1
+                for i in dff_miss_ss["Town"] :
+                    st.sidebar.write(c,". ",i.split(",")[0])
+                    c=c+1
 
     
-     
+    
